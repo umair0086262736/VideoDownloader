@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umair - Video Downloader</title>
+    <style>
+        :root {
+            --primary: #8a2be2;
+            --secondary: #ff1493;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --success: #28a745;
+            --danger: #dc3545;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            padding: 40px 0;
+        }
+        
+        .platform-selector {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            gap: 20px;
+        }
+        
+        .platform-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+        }
+        
+        .platform-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+        }
+        
+        .download-section {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .input-group {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .url-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 50px 0 0 50px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .url-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .download-btn {
+            padding: 0 30px;
+            border: none;
+            border-radius: 0 50px 50px 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.4);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .feature-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        
+        .how-to-use {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .platform-selector {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .platform-btn {
+                width: 80%;
+            }
+            
+            .input-group {
+                flex-direction: column;
+            }
+            
+            .url-input {
+                border-radius: 50px;
+                margin-bottom: 10px;
+            }
+            
+            .download-btn {
+                border-radius: 50px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">Umair</div>
+            <div class="tagline">Download Instagram & TikTok Videos Easily</div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <main class="main-content">
+            <div class="platform-selector">
+                <button class="platform-btn active" id="instagram-btn">Instagram Downloader</button>
+                <button class="platform-btn" id="tiktok-btn">TikTok Downloader</button>
+            </div>
+            
+            <div class="download-section">
+                <h2 id="platform-title">Download Instagram Videos</h2>
+                <p>Paste the link of the Instagram video you want to download</p>
+                
+                <div class="input-group">
+                    <input type="text" class="url-input" id="video-url" placeholder="Paste video URL here...">
+                    <button class="download-btn" id="download-button">Download</button>
+                </div>
+                
+                <div id="download-status"></div>
+            </div>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Fast Download</h3>
+                    <p>Download videos quickly without any delays</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title">Safe & Secure</h3>
+                    <p>Your privacy is our priority. No data stored</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="feature-title">Mobile Friendly</h3>
+                    <p>Works perfectly on all devices and screen sizes</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">💯</div>
+                    <h3 class="feature-title">High Quality</h3>
+                    <p>Download videos in the best available quality</p>
+                </div>
+            </div>
+            
+            <div class="how-to-use">
+                <h2>How to Use</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Copy Link</h3>
+                        <p>Copy the video URL from Instagram or TikTok</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Paste URL</h3>
+                        <p>Paste the link in the input field above</p>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Download</h3>
+                        <p>Click the download button and save your video</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Umair Video Downloader. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Platform selection functionality
+        const instagramBtn = document.getElementById('instagram-btn');
+        const tiktokBtn = document.getElementById('tiktok-btn');
+        const platformTitle = document.getElementById('platform-title');
+        const videoUrlInput = document.getElementById('video-url');
+        const downloadButton = document.getElementById('download-button');
+        const downloadStatus = document.getElementById('download-status');
+        
+        instagramBtn.addEventListener('click', function() {
+            instagramBtn.classList.add('active');
+            tiktokBtn.classList.remove('active');
+            platformTitle.textContent = 'Download Instagram Videos';
+            videoUrlInput.placeholder = 'Paste Instagram video URL here...';
+        });
+        
+        tiktokBtn.addEventListener('click', function() {
+            tiktokBtn.classList.add('active');
+            instagramBtn.classList.remove('active');
+            platformTitle.textContent = 'Download TikTok Videos';
+            videoUrlInput.placeholder = 'Paste TikTok video URL here...';
+        });
+        
+        // Download functionality (simulated)
+        downloadButton.addEventListener('click', function() {
+            const url = videoUrlInput.value.trim();
+            
+            if (!url) {
+                showStatus('Please enter a valid URL', 'error');
+                return;
+            }
+            
+            // Check if URL is from Instagram or TikTok based on active platform
+            const isInstagram = instagramBtn.classList.contains('active');
+            
+            if (isInstagram && !url.includes('instagram.com')) {
+                showStatus('Please enter a valid Instagram URL', 'error');
+                return;
+            }
+            
+            if (!isInstagram && !url.includes('tiktok.com')) {
+                showStatus('Please enter a valid TikTok URL', 'error');
+                return;
+            }
+            
+            showStatus('Processing your request...', 'processing');
+            
+            // Simulate download process
+            setTimeout(() => {
+                showStatus('Video downloaded successfully!', 'success');
+            }, 2000);
+        });
+        
+        function showStatus(message, type) {
+            downloadStatus.textContent = message;
+            downloadStatus.className = '';
+            
+            if (type === 'error') {
+                downloadStatus.style.color = 'var(--danger)';
+            } else if (type === 'success') {
+                downloadStatus.style.color = 'var(--success)';
+            } else {
+                downloadStatus.style.color = 'var(--light)';
+            }
+        }
+    </script>
+</body>
+</html>
